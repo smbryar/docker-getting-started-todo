@@ -47,6 +47,12 @@ function TodoListCard() {
         [items],
     );
 
+    const itemSorter = (a,b) => {
+        if (a.completed && !b.completed) return 1;
+        if (!a.completed && b.completed) return -1;
+        else return 0;
+    }
+
     if (items === null) return 'Loading...';
 
     return (
@@ -55,7 +61,7 @@ function TodoListCard() {
             {items.length === 0 && (
                 <p className="text-center">You have no todo items yet! Add one above!</p>
             )}
-            {items.map(item => (
+            {items.sort(itemSorter).map(item => (
                 <ItemDisplay
                     item={item}
                     key={item.id}
